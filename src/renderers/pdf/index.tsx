@@ -6,9 +6,16 @@ import PDFControls from "./components/PDFControls";
 import { PDFProvider } from "./state";
 import { pdfjs } from "react-pdf";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`,
-).toString();
+// 动态引入 Worker 文件
+async function loadPdfWorker() {
+  const workerModule = await import("./pdf.worker.min.mjs");
+  pdfjs.GlobalWorkerOptions.workerSrc =
+    workerModule.WorkerMessageHandler.toString();
+}
+
+loadPdfWorker().catch((err) => {
+  console.error("Error loading PDF worker:", err);
+});
 
 const PDFRenderer: DocRenderer = ({ mainState }) => {
   return (

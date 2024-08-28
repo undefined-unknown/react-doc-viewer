@@ -7,7 +7,11 @@
     "skipLibCheck": true,
     "noEmit": true,
     "resolveJsonModule": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "moduleResolution": "Node",
+    "module": "ESNext",
+    "allowJs": true,
+    "declaration": true
   },
   "exclude": ["node_modules", "use-cases"]
 }
